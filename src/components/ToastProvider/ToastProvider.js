@@ -1,5 +1,7 @@
 import React from 'react';
 
+import useKeydown from '../../hooks/use-keydown';
+
 export const ToastContext = React.createContext();
 
 function ToastProvider({ children }) {
@@ -45,19 +47,16 @@ function ToastProvider({ children }) {
     setToasts(nextToasts);
   }
 
-  React.useEffect(() => {
-    function handleKeyDown(event) {
-      if (event.key === 'Escape') {
-        setToasts([]);
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+  const handleEscape = React.useCallback(() => {
+    setToasts([]);
   }, []);
+
+  useKeydown('Escape', handleEscape);
+  /*
+    Now I can use the custom generic hook
+    with different keys and callbacks aswell
+    e.g useKeydown('Enter', differentCallback);
+  */
 
   return (
     <ToastContext.Provider value={{ toasts, createToast, dismissToast }}>
