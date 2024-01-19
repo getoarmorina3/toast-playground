@@ -1,6 +1,7 @@
 import React from 'react';
+
+import { ToastContext } from '../ToastProvider';
 import Button from '../Button';
-import Toast from '../Toast';
 import ToastShelf from '../ToastShelf';
 
 import styles from './ToastPlayground.module.css';
@@ -8,28 +9,7 @@ import styles from './ToastPlayground.module.css';
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
-  const [toasts, setToasts] = React.useState([
-    {
-      id: crypto.randomUUID(),
-      message: 'This is a notice toast',
-      variant: 'notice',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is a warning toast',
-      variant: 'warning',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is a success toast',
-      variant: 'success',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is an error toast',
-      variant: 'error',
-    },
-  ]);
+  const { createToast } = React.useContext(ToastContext);
 
   const [message, setMessage] = React.useState('');
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
@@ -37,26 +17,10 @@ function ToastPlayground() {
   function handleCreateToast(event) {
     event.preventDefault();
 
-    const nextToasts = [
-      ...toasts,
-      {
-        id: crypto.randomUUID(),
-        message,
-        variant,
-      },
-    ];
-    setToasts(nextToasts);
+    createToast(message, variant);
 
     setMessage('');
     setVariant(VARIANT_OPTIONS[0]);
-  }
-
-  function handleDismiss(id) {
-    const nextToasts = toasts.filter((toast) => {
-      return toast.id !== id;
-    });
-
-    setToasts(nextToasts);
   }
 
   return (
@@ -66,7 +30,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      <ToastShelf toasts={toasts} handleDismiss={handleDismiss} />
+      <ToastShelf />
 
       <form onSubmit={handleCreateToast} className={styles.controlsWrapper}>
         <div className={styles.row}>
