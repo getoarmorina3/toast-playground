@@ -8,23 +8,8 @@ function ToastProvider({ children }) {
   const [toasts, setToasts] = React.useState([
     {
       id: crypto.randomUUID(),
-      message: 'This is a notice toast',
-      variant: 'notice',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is a warning toast',
-      variant: 'warning',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is a success toast',
+      message: 'Pop other toasts to see how they behave',
       variant: 'success',
-    },
-    {
-      id: crypto.randomUUID(),
-      message: 'This is an error toast',
-      variant: 'error',
     },
   ]);
 
