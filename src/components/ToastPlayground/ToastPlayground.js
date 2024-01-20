@@ -49,6 +49,7 @@ function ToastPlayground() {
               onChange={(event) => {
                 setMessage(event.target.value);
               }}
+              required
             />
           </div>
         </div>
