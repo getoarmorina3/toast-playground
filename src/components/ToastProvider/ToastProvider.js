@@ -44,7 +44,7 @@ function ToastProvider({ children }) {
   useKeydown('Escape', handleEscape);
   /*
     Now I can use the custom generic hook
-    with different keys and callbacks aswell
+    with different keys and callbacks as well
     e.g useKeydown('Enter', differentCallback);
   */
 
